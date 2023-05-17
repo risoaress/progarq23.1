@@ -4,28 +4,30 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 struct Dados {
-    std::string nome;
-    std::string sobrenome;
+    string nome;
+    string sobrenome;
     int idade;
-    std::string email;
+    string email;
 };
 
-std::vector<Dados> lerArquivoCSV(const std::string& nomeArquivo) {
-    std::vector<Dados> dados;
-    std::ifstream arquivo(nomeArquivo);
+vector<Dados> lerArquivoCSV(const string& nomeArquivo) {
+    vector<Dados> dados;
+    ifstream arquivo(nomeArquivo);
     if (!arquivo) {
-        std::cerr << "Erro ao abrir o arquivo " << nomeArquivo << std::endl;
+        cerr << "Erro ao abrir o arquivo " << nomeArquivo << endl;
         return dados;
     }
 
-    std::string linha;
-    while (std::getline(arquivo, linha)) {
-        std::istringstream ss(linha);
-        std::string valor;
-        std::vector<std::string> valores;
+    string linha;
+    while (getline(arquivo, linha)) {
+        istringstream ss(linha);
+        string valor;
+        vector<string> valores;
 
-        while (std::getline(ss, valor, ',')) {
+        while (getline(ss, valor, ',')) {
             valores.push_back(valor);
         }
 
@@ -33,7 +35,7 @@ std::vector<Dados> lerArquivoCSV(const std::string& nomeArquivo) {
             Dados dadosTemp;
             dadosTemp.nome = valores[0];
             dadosTemp.sobrenome = valores[1];
-            dadosTemp.idade = std::stoi(valores[2]);
+            dadosTemp.idade = stoi(valores[2]);
             dadosTemp.email = valores[3];
             dados.push_back(dadosTemp);
         }
@@ -43,30 +45,30 @@ std::vector<Dados> lerArquivoCSV(const std::string& nomeArquivo) {
     return dados;
 }
 
-void criarRelatorio(const std::vector<Dados>& dados) {
-    std::ofstream relatorio("relatorio.txt");
+void criarRelatorio(const vector<Dados>& dados) {
+    ofstream relatorio("relatorio.txt");
     if (!relatorio) {
-        std::cerr << "Erro ao criar o arquivo de relatório" << std::endl;
+        cerr << "Erro ao criar o arquivo de relatório" << endl;
         return;
     }
 
-    relatorio << "Relatório de Dados" << std::endl;
-    relatorio << "=================" << std::endl;
+    relatorio << "Relatório de Dados" << endl;
+    relatorio << "=================" << endl;
 
     for (const auto& dado : dados) {
-        relatorio << "Nome: " << dado.nome << " " << dado.sobrenome << std::endl;
-        relatorio << "Idade: " << dado.idade << std::endl;
-        relatorio << "Email: " << dado.email << std::endl;
-        relatorio << "-----------------" << std::endl;
+        relatorio << "Nome: " << dado.nome << " " << dado.sobrenome << endl;
+        relatorio << "Idade: " << dado.idade << endl;
+        relatorio << "Email: " << dado.email << endl;
+        relatorio << "-----------------" << endl;
     }
 
     relatorio.close();
-    std::cout << "Relatório criado com sucesso!" << std::endl;
+    cout << "Relatório criado com sucesso!" << endl;
 }
 
 int main() {
-    std::string nomeArquivo = "dados.csv";
-    std::vector<Dados> dados = lerArquivoCSV(nomeArquivo);
+    string nomeArquivo = "dados.csv";
+    vector<Dados> dados = lerArquivoCSV(nomeArquivo);
     criarRelatorio(dados);
 
     return 0;
